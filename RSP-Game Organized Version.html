@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rock,Paper,Scissors</title>
+</head>
+<body>
+
+<script>
+
+    'use strict';
+    //It will give us a random number from the range of [1,3] , then we are going to match it with
+    //either Rock , Scissors or Paper string values and return it to the caller , whenever the 
+    // function is called and wherever.
+
+    function pickRandom(){
+        let randomNum = Math.floor(Math.random() * 3 + 1); 
+        
+        if (randomNum === 1) {                         
+            return 'Rock';
+        }
+
+        else if (randomNum === 2) { 
+            return 'Scissors';
+        }
+
+        else {
+            return 'Paper';
+        }
+                                
+    }
+    
+
+
+    //This function , whenever called , will play the RSP Game once . If it's called n-times
+    //it will play the game n-times too.
+    //The playGame() should return values that are going to be used later for the 5-round game.
+
+    function playGame(playerSelection,computerSelection) {
+
+        if (playerSelection === computerSelection){
+            return 'Tie';
+        }
+
+        else if ((playerSelection === 'Rock' && computerSelection === 'Scissors') || (playerSelection === 'Scissors' && computerSelection === 'Paper') || (playerSelection === 'Paper' && computerSelection === 'Rock')) {
+            return 'Win';
+        }
+
+        else if ((playerSelection === 'Rock' && computerSelection === 'Paper') || (playerSelection === 'Scissors' && computerSelection === 'Rock') || (playerSelection === 'Paper' && computerSelection === 'Scissors')) {
+            return 'Lose';
+        }
+
+        else {
+            return 'Wrong input';
+        }
+    }
+
+
+
+
+    //Function for the user to input either Rock , Scissors or Paper , through a prompt window.
+    //Input must be case INSENSITIVE.
+
+    function pickUser() {
+        let userPick = window.prompt('Rock , Scissors or Paper ?');
+        userPick = userPick.charAt(0).toUpperCase() + userPick.slice(1).toLowerCase() ;
+        return userPick;
+    }
+
+
+
+    
+    //The main game is here . The game() function will play 5 rounds of RSP Game and at the end
+    //will announce either a winner or a loser. In this function , to shorten our code and 
+    //make it look cleaner , we will use loops. Also , all functions above will be invoked or called
+    //in here.
+
+    function game(){
+        let playerScore = 0;
+        let computerScore = 0;
+
+        let i = 0;
+
+        for (i = 0; i < 5; i++) {   //i is the number of rounds
+            let playerSelection = pickUser();
+            let computerSelection = pickRandom();
+            
+            playGame(playerSelection,computerSelection);
+            let roundResult =  playGame(playerSelection,computerSelection);
+
+            if (roundResult === 'Tie') {
+                console.log('It is a TIE !');
+                i--;  // Tie won't count as a round , because we must get a winner.
+            }
+
+            else if (roundResult === 'Win'){
+                console.log(`You win!${playerSelection} beats ${computerSelection}`);
+                playerScore++ ;
+            }
+            
+            else if (roundResult === 'Lose') {
+                console.log(`You lose!${computerSelection} beats ${playerSelection}`);
+                computerScore++;
+            }
+
+
+            else {
+                console.log('Please type ONLY ONE of the following values: "Rock" , "Scissors" , "Paper"');
+                i--;
+            }
+
+             console.log('Alex\'s Score is  : ' + playerScore);
+             console.log('Computer Score is : ' + computerScore);
+        }
+
+        function showResult() {
+            if (playerScore > computerScore){
+                alert('GAME OVER ! Alex is the winner!');
+            }
+
+            else {
+                alert('GAME OVER ! You lose !');
+            }
+        }
+
+        showResult();
+
+    }
+
+    game();
+
+
+
+    
+</script>
+
+
+    
+</body>
+</html>
+
+
+
